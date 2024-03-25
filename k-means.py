@@ -39,12 +39,20 @@ print(abalone_df[["Length", "Diameter", "Height", "Cluster"]])
 print("\nCentroids (Cluster Centers):")
 print(pd.DataFrame(centroids, columns=column_names[1:]))  # Exclude "Sex" column
 
-# Create a pairplot to visualize every pair of features
-sns.pairplot(abalone_df, hue="Cluster", palette=sns.color_palette("hsv", k))
-
+# Create a scatter plot of Length vs Diameter
+plt.figure(figsize=(10, 6))
+plt.scatter(abalone_df['Length'], abalone_df['Diameter'], c=abalone_df['Cluster'], cmap='viridis', label='Data Points')
+plt.scatter(centroids[:, 0], centroids[:, 1], marker='x', s=200, c='red', label='Centroids')
+plt.xlabel('Length')
+plt.ylabel('Diameter')
+plt.title('Length vs Diameter with Centroids')
+plt.legend()
 plt.show()
 
-
+# Create a pairplot to visualize specific pairs of features
+pairplot_features = ["Length", "Diameter", "Height", "Rings"]
+sns.pairplot(abalone_df, vars=pairplot_features, hue="Cluster", palette=sns.color_palette("hsv", k))
+plt.show()
 
 # python -m venv venv
 # pip install numpy scikit-learn
